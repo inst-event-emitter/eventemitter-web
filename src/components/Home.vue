@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Nav from './nav';
+import Nav from '@/components/Nav';
 
 export default {
   components: { Nav },

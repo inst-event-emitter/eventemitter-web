@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Home from '@/components/home';
-import Events from '@/components/events';
+import Home from '@/components/Home';
+import Events from '@/components/Events';
 
 Vue.use(Router);
 
