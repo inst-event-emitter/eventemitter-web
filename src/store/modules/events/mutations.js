@@ -7,6 +7,10 @@ export default {
     state.loading = payload;
   },
   [SET_EVENTS]: (state, payload) => {
-    state.events = payload.events;
+    const { events = [] } = payload;
+    state.events = events.map(event => ({
+      ...event,
+      imgUrl: 'https://raw.githubusercontent.com/vuetifyjs/docs/dev/static/doc-images/cards/docks.jpg',
+    }));
   },
 };

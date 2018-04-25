@@ -11,15 +11,18 @@
               :src="event.imgUrl"
             >
               <v-container fill-height fluid>
-                <v-layout>
-                  <v-flex xs12 align-end d-flex>
-                    <span class="headline">{{event.title}}</span>
-                  </v-flex>
+                <v-layout column justify-space-between>
+                  <span class="headline">{{event.name}}</span>
+                  <span class="headline">{{event.date}}</span>
                 </v-layout>
               </v-container>
             </v-card-media>
             <v-card-text>
-              {{event.content}}
+              <v-flex xs12 align-start d-flex>
+                <span :style="{ textAlign: 'justify', textIndent: '1.5em' }">
+                  {{event.description}}
+                </span>
+              </v-flex>
             </v-card-text>
             <v-card-actions>
               <v-btn flat class="blue--text">Read More</v-btn>
