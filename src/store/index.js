@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 
-import eventsModule from './modules/events/events';
+import eventsModule from './modules/events';
 
 Vue.use(Vuex);
 

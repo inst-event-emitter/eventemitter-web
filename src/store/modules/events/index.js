@@ -5,6 +5,7 @@ import mutations from './mutations';
 const defaultState = {
   events: [],
   loading: false,
+  isEventCreation: false,
 };
 
 export const EVENTS_MODULE = 'eventsModule';

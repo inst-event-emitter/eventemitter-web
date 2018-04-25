@@ -3,7 +3,7 @@
     <v-layout row wrap align-center>
       <v-flex xs12 md6 offset-md3>
         <h1 v-if="isLoading">Yes</h1>
-        <div v-for="event in events" :key="event.title">
+        <div v-for="event in events" :key="event.id">
           <v-card class="my-3" hover>
             <v-card-media
               class="white--text"
@@ -33,35 +33,49 @@
           </v-card>
         </div>
       </v-flex>
-      <v-btn fab dark color="teal lighten-1" fixed right bottom>
+      <v-btn
+        fab dark fixed right bottom
+        color="teal lighten-1"
+        @click.stop="toggleEventCreation"
+      >
         <v-icon :style="{ height: 'auto' }">add</v-icon>
       </v-btn>
     </v-layout>
+    <CreateEvevnt
+      :show="isEventCreation"
+      :onClose="toggleEventCreation"
+    />
   </Nav>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 import Nav from '@/components/Nav';
+import CreateEvevnt from '@/components/CreateEvent';
 
-import { EVENTS_MODULE } from '../store/modules/events/events';
-import { GET_EVENTS, IS_EVENTS_LOADING } from '../store/modules/events/getters';
+import { EVENTS_MODULE } from '../store/modules/events/index';
+import { GET_EVENTS, IS_EVENTS_LOADING, IS_EVENT_CREATION } from '../store/modules/events/getters';
 import { LOAD_EVENTS } from '../store/modules/events/actions';
+import { TOGGLE_EVENT_CREATION } from '../store/modules/events/mutations';
 
 export default {
   created() {
-    this.loadEvents();
+    this[LOAD_EVENTS]();
   },
-  components: { Nav },
+  components: { Nav, CreateEvevnt },
   computed: {
     ...mapGetters(EVENTS_MODULE, {
       events: GET_EVENTS,
       isLoading: IS_EVENTS_LOADING,
+      isEventCreation: IS_EVENT_CREATION,
     }),
   },
   methods: {
     ...mapActions(EVENTS_MODULE, [LOAD_EVENTS]),
+    ...mapMutations(EVENTS_MODULE, {
+      toggleEventCreation: TOGGLE_EVENT_CREATION,
+    }),
   },
 };
 </script>

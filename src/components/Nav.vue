@@ -47,7 +47,7 @@
       <v-btn flat class="hidden-xs-only">Sign In</v-btn>
     </v-toolbar>
     <v-content>
-      <v-container>
+      <v-container fluid>
         <slot></slot>
       </v-container>
     </v-content>
