@@ -41,9 +41,11 @@
         <v-icon :style="{ height: 'auto' }">add</v-icon>
       </v-btn>
     </v-layout>
-    <CreateEvevnt
+    <CreateEvent
       :show="isEventCreation"
       :onClose="toggleEventCreation"
+      :onCreate="createEvent"
+      :isCreating="isEventCreating"
     />
   </Nav>
 </template>
@@ -52,29 +54,32 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 import Nav from '@/components/Nav';
-import CreateEvevnt from '@/components/CreateEvent';
+import CreateEvent from '@/components/CreateEvent';
 
-import { EVENTS_MODULE } from '../store/modules/events/index';
-import { GET_EVENTS, IS_EVENTS_LOADING, IS_EVENT_CREATION } from '../store/modules/events/getters';
-import { LOAD_EVENTS } from '../store/modules/events/actions';
-import { TOGGLE_EVENT_CREATION } from '../store/modules/events/mutations';
+import { EVENTS_MODULE_NAME, GET_EVENTS, GET_IS_EVENTS_LOADING, GET_IS_EVENT_CREATION,
+  GET_IS_EVENT_CREATING, LOAD_EVENTS_ACTION, CREATE_EVENT_ACTION,
+  TOGGLE_EVENT_CREATION_MUTATION } from '../store/modules/events/consts';
 
 export default {
   created() {
-    this[LOAD_EVENTS]();
+    this.loadEvents();
   },
-  components: { Nav, CreateEvevnt },
+  components: { Nav, CreateEvent },
   computed: {
-    ...mapGetters(EVENTS_MODULE, {
+    ...mapGetters(EVENTS_MODULE_NAME, {
       events: GET_EVENTS,
-      isLoading: IS_EVENTS_LOADING,
-      isEventCreation: IS_EVENT_CREATION,
+      isLoading: GET_IS_EVENTS_LOADING,
+      isEventCreation: GET_IS_EVENT_CREATION,
+      isEventCreating: GET_IS_EVENT_CREATING,
     }),
   },
   methods: {
-    ...mapActions(EVENTS_MODULE, [LOAD_EVENTS]),
-    ...mapMutations(EVENTS_MODULE, {
-      toggleEventCreation: TOGGLE_EVENT_CREATION,
+    ...mapActions(EVENTS_MODULE_NAME, {
+      loadEvents: LOAD_EVENTS_ACTION,
+      createEvent: CREATE_EVENT_ACTION,
+    }),
+    ...mapMutations(EVENTS_MODULE_NAME, {
+      toggleEventCreation: TOGGLE_EVENT_CREATION_MUTATION,
     }),
   },
 };
