@@ -11,8 +11,11 @@ export default {
     commit(SET_LOADING_MUTATION, true);
 
     try {
-      const { data: events = [] } = await axios.get(`${SERVER_URL}/api/v1/events`);
-      commit(SET_EVENTS_MUTATION, { events });
+      const response = await axios.get(`${SERVER_URL}/api/v1/events`);
+
+      commit(SET_EVENTS_MUTATION, {
+        events: get(response, 'data.events', []),
+      });
       commit(SET_LOADING_MUTATION, false);
     } catch (err) {
       commit(SET_LOADING_MUTATION, false);
