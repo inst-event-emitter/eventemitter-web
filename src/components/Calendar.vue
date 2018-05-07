@@ -6,8 +6,6 @@
 
 <script>
 import { FullCalendar } from 'vue-full-calendar';
-import "fullcalendar/dist/fullcalendar.min.css";
-
 import Nav from '@/components/Nav';
 
 export default {
@@ -29,14 +27,18 @@ export default {
         },
         {
           title: 'event3',
-          start: '2018-05-09T12:30:00',
+          start: '2018-05-09 12:30',
           allDay: false,
         },
       ],
       config: {
         defaultView: 'month',
       },
-    }
-  }
-}
+    };
+  },
+};
 </script>
+
+<style>
+    @import 'fullcalendar/dist/fullcalendar.css';
+</style>

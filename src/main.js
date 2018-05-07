@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import Vuelidate from 'vuelidate';
-import FullCalendar from 'vue-full-calendar'; //https://www.npmjs.com/package/vue-full-calendar
+import FullCalendar from 'vue-full-calendar';
 
 import App from './App';
 import router from './router';
