@@ -126,11 +126,12 @@
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, minLength } from 'vuelidate/lib/validators';
 import moment from 'moment';
+import { isEmpty } from 'lodash';
 
 const nameMin = 5;
-const nameMax = 50;
+const nameMax = 100;
 const descriptionMin = 50;
-const descriptionMax = 1000;
+const descriptionMax = 3000;
 
 export default {
   mixins: [validationMixin],
@@ -233,14 +234,16 @@ export default {
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        // this.clear();
         this.onCreate({
           name: this.name,
           description: this.description,
-          date: this.date,
-          time: this.time,
+          date: moment(isEmpty(this.time)
+            ? this.date
+            : `${this.date} ${this.time}`,
+          ).valueOf(),
         });
       }
+      this.clear();
     },
     closeModal() {
       this.clear();

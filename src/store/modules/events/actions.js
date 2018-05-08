@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { isEmpty, get } from 'lodash';
+import { get } from 'lodash';
+import moment from 'moment';
 
 import { LOAD_EVENTS_ACTION, CREATE_EVENT_ACTION, CREATE_EVENT_ASYNC_TYPES_ACTION,
   SET_LOADING_MUTATION, SET_EVENTS_MUTATION } from './consts';
@@ -12,7 +13,11 @@ export default {
       const response = await axios.get('/api/v1/events');
 
       commit(SET_EVENTS_MUTATION, {
-        events: get(response, 'data.events', []),
+        events: get(response, 'data.events', [])
+          .map(event => ({
+            ...event,
+            date: moment(get(event, 'date', '')).format('YYYY-MM-DD HH:mm'),
+          })),
       });
       commit(SET_LOADING_MUTATION, false);
     } catch (err) {
@@ -20,13 +25,13 @@ export default {
     }
   },
   [CREATE_EVENT_ACTION]: async ({ commit }, payload) => {
-    const { name, description, date, time } = payload;
+    const { name, description, date } = payload;
     try {
       commit(CREATE_EVENT_ASYNC_TYPES_ACTION.PENDING);
       const response = await axios.post('/api/v1/events', {
         name,
         description,
-        date: isEmpty(time) ? date : `${date} ${time}`,
+        date,
       });
       commit(get(response, 'status') === 201
         ? CREATE_EVENT_ASYNC_TYPES_ACTION.SUCCESS
